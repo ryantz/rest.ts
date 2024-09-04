@@ -62,7 +62,7 @@ export const create = async(userData: unitUser): Promise<unitUser | null> => {
         return user;
 };
 
-export const findByEmail = async(user_email: string): Promise<null | unitUser> =>{
+export const findByEmail = async(user_email: string): Promise<null | unitUser> => {
         // retrieves all users
         // finds users with matching email using .find
         const allUsers = await findAll();
@@ -80,7 +80,7 @@ export const comparePassword = async(email: string, supplied_password: string): 
         // because email and password login
         // use bcrypt.compare to compare hashed password with supplied
         const user = await findByEmail(email);
-        const decryptPassword = await bcrypt.compare(supplied_password, user.password);
+        const decryptPassword = await bcrypt.compare(supplied_password, user!.password);
 
         if(!decryptPassword){
                 return null;
@@ -89,31 +89,46 @@ export const comparePassword = async(email: string, supplied_password: string): 
         return user
 }
 
+// checks if user exists
+// updates password with values in updateValues
+// users properties updates with values from updateValues
+// users object saved
+export const update = async(id: string, updateValues: User): Promise<unitUser | null> => {
+        const userExists = await findOne(id);
 
+        if(!userExists){
+                return null;
+        }
 
+        if(updateValues.password){
+                const salt = bcrypt.genSalt(10);
+                const newPass = await bcrypt.hash(updateValues.password, salt);
 
+                updateValues.password = newPass;
+        }
 
+        users[id] = {
+                ...userExists,
+                ...updateValues;
+        }
 
+        saveUsers();
+        
+        return users[id];
+}
 
+// check if user exists
+// if yes, delete and save
+export const remove = async(id: string): Promise<null | void> => {
+        const user = await findOne(id);
+        
+        if(!user){
+                return null;
+        }
 
+        delete users[id];
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        saveUsers();
+}
 
 
