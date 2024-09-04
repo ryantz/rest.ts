@@ -53,7 +53,7 @@ export const create = async(userData: unitUser): Promise<unitUser | null> => {
                 id: id,
                 username: userData.username,
                 email: userData.email,
-                password: hashedPassword; // hashed saved
+                password: hashedPassword // hashed saved
         };
         
         // unit user saved to the user object
@@ -101,7 +101,7 @@ export const update = async(id: string, updateValues: User): Promise<unitUser | 
         }
 
         if(updateValues.password){
-                const salt = bcrypt.genSalt(10);
+                const salt = await bcrypt.genSalt(10);
                 const newPass = await bcrypt.hash(updateValues.password, salt);
 
                 updateValues.password = newPass;
@@ -109,7 +109,7 @@ export const update = async(id: string, updateValues: User): Promise<unitUser | 
 
         users[id] = {
                 ...userExists,
-                ...updateValues;
+                ...updateValues
         }
 
         saveUsers();

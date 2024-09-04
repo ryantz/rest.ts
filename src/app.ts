@@ -6,6 +6,7 @@ import express from "express"
 import * as dotenv from "dotenv"
 import cors from "cors"
 import helmet from "helmet"
+import {userRouter} from "./users/users.routes"
 
 // loading environmental variables from local .env
 
@@ -27,6 +28,9 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cors());
 app.use(helmet());
+
+// routes
+app.use('/', userRouter);
 
 // listening on port for instructions
 app.listen(PORT, () => {
