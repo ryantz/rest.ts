@@ -7,6 +7,7 @@ import * as dotenv from "dotenv"
 import cors from "cors"
 import helmet from "helmet"
 import {userRouter} from "./users/users.routes"
+import {prodRouter} from "./products/products.routes"
 
 // loading environmental variables from local .env
 
@@ -31,6 +32,7 @@ app.use(helmet());
 
 // routes
 app.use('/', userRouter);
+app.use('/', prodRouter);
 
 // listening on port for instructions
 app.listen(PORT, () => {

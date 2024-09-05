@@ -2,7 +2,7 @@ export interface Product{
         name: string,
         price: number,
         quantity: number,
-        image: string;
+        image?: string;
 }
 
 export interface unitProduct extends Product{

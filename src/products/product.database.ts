@@ -2,7 +2,7 @@ import {Product, unitProduct, Products} from "./product.interface";
 import {v4 as random} from "uuid";
 import fs from "fs";
 
-let products: loadProducts();
+let products = loadProducts();
 
 function loadProducts(): Products{
         try{
@@ -41,6 +41,23 @@ export const create = async(productInfo: Product): Promise<null | unitProduct> =
         products[id] = {
                 id: id,
                 ...productInfo
+        }
+
+        saveProducts();
+        
+        return products[id];
+}
+
+export const update = async(id: string, updateValues: Product): Promise<unitProduct | null> => {
+        const prod = await findOne(id);
+        
+        if(!prod){
+                return null
+        }
+
+        products[id] = {
+                id,
+                ...updateValues
         }
 
         saveProducts();
