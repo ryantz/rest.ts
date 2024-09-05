@@ -26,3 +26,38 @@ function saveProducts(){
 export const findAll = async(): Promise<unitProduct[]> => Object.values(products);
 
 export const findOne = async(id: string): Promise<unitProduct> => products[id];
+
+export const create = async(productInfo: Product): Promise<null | unitProduct> => {
+        
+        let id = random();
+
+        let product = await findOne(id);
+
+        while(product){
+                id = random();
+                product = await findOne(id);
+        }
+
+        products[id] = {
+                id: id,
+                ...productInfo
+        }
+
+        saveProducts();
+        
+        return products[id];
+}
+
+export const remove = async(id: string): Promise<null | void> => {
+
+        const product = await findOne(id)
+
+        if(!product){
+                return null;
+        }
+
+        delete products[id];
+        
+        saveProducts();
+}
+
