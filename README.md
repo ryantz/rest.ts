@@ -1,7 +1,7 @@
 Motivations: Get familiar with creating a REST API with typescript
 REST API: Representational State Transfer.
 
-**Advantages: **
+**Advantages of REST:**
 
 1. Flexible and lightweight way to integrate applications and to connect components in microservices architectures.
 2. REST APIs can be developed with virtually any language and data formats.
@@ -35,8 +35,8 @@ REST API: Representational State Transfer.
    - Responses can contain executable code (Java applets)
    - Code should only run on-demand.
      
-**
-How it works:**
+**How REST works:** 
+
 1. Communicatiom through HTTP requests to perform CRUD.
 2. GET, POST, PUT, DELETE.
 3. Resource representation can be delivered in any data fromat e.g. JSON.
